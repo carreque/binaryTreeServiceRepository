@@ -1,0 +1,17 @@
+{
+  "name": "microservice",
+  "version": "1.0.0",
+  "description": "Binary insertion operation implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Carlos Revuelto Quero",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "jest": "^29.6.3"
+  }
+}

@@ -1,0 +1,2 @@
+#Avoid to push dependencies project
+/node_modules
