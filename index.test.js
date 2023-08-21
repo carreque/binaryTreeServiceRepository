@@ -7,6 +7,10 @@ describe("Index sample test.js", () => {
         expect(add(2,2)).toBe(4);
      });
 
+     test('should test add', () => { 
+        expect(add(2,3)).toBe(5);
+     });
+
      test('should test substract', () => { 
         expect(substract(2,2)).toBe(1);
      });
