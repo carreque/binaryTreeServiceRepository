@@ -12,6 +12,6 @@ describe("Index sample test.js", () => {
      });
 
      test('should test substract', () => { 
-        expect(substract(2,2)).toBe(1);
+        expect(substract(2,2)).toBe(0);
      });
 });
