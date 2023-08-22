@@ -1,6 +1,4 @@
-module.exports = {
+const ApiTreeService = require('./src/classes/ApiTreeService');
 
-    add: (a,b) => a +b,
-    substract: (a,b) => a-b,
-    multiply: (a,b) => a*b
-};
+const apiTreeService = new ApiTreeService();
+apiTreeService.listen();
