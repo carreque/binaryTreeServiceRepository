@@ -6,17 +6,18 @@ class BinaryTree{
     constructor(){
         this.root = null;
     }
-
-    //Operations
+   
     insertValue(value){
 
         /**
          * 1 - First check if the received variable has a correct value
-         * 2 - Check if the binary tree is empty
-         * 3 - If is not empty,check where the new node has to be inserted
+         * 2 - Check if the binary tree is empty. If is empty the new value will be the value of the new tree's root
+         * 3 - If is not empty, check where the new node has to be inserted
          */
+
         if(value === undefined || value === null)
             return;
+
         let newNode = new Node(value);
 
         if (this.root === null){
@@ -31,7 +32,7 @@ class BinaryTree{
 
         /**
          * 1 - First check if the received variables has a correct value
-         * 2 - Check if the value has to be added to the right or left in the tree depending on the new node's value
+         * 2 - Check if the value has to be added to the right or left in the tree, depending on the new node's value
          * 3 - If when the second step is applied it reachs out a null value, then the new node is inserted there
          *     On the other hand, the second step still happening until the first condition of this step is achieved
          */
@@ -63,8 +64,8 @@ class BinaryTree{
 
         /**
          * 1 - Check if is the received node is a valid node
-         * 2 - If the left children exists and it differents from null, then it calls to the same function to print and check the left children and its childrens
-         * 3 - If the right children exists and it differents from null, then it calls to the same function to print and check the right children and its childrens
+         * 2 - If the left children exists and it differents from null, then it calls to the same function to print and check the left children
+         * 3 - If the right children exists and it differents from null, then it calls to the same function to print and check the right children
          * 4 - return the actual node
          */
         if (nodeToBeginPrint === undefined || nodeToBeginPrint === null){

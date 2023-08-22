@@ -6,6 +6,11 @@ const { insertNewValue, testConnection } = require('../controllers/treeOperation
 //Initialize new router
 const router = Router();
 
+/**
+ * Post request with the path /insertValue. 
+ * It will apply the following validators to ensure that the fields of the endpoint are sent it correctly.
+ * If the fields are sent it correctly, then the function insertNewValue will be executed
+ */
 router.post('/insertValue', [
     check('value', 'Value field could not be empty').notEmpty(),
     check('value', 'Value field should be numeric').isInt(),

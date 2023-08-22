@@ -43,8 +43,7 @@ describe("Test binary search",() => {
         expect(binaryTreeTest.root.right.value).toBe(3);
     });
 
-    //matizar greater or equal
-    test('When a binaryTree has a root, left and right values and a new greater value is inserted, then it creates a second level and add to the right-right tree part the new value', () => {
+    test('When a binaryTree has a root, left and right values and a new greater or equal value than root and right-root child values is inserted, then it is inserted as the right child of the right-root child', () => {
         const binaryTreeTest = new BinaryTree();
         binaryTreeTest.insertValue(3);
         binaryTreeTest.insertValue(2);
@@ -57,7 +56,7 @@ describe("Test binary search",() => {
         expect(binaryTreeTest.root.right.left).toBeNull();
     });
 
-    test('When a binaryTree has a root, left and right values and a lower greater value is inserted, then it creates a second level and add to the right-left the new value', () => {
+    test('When a binaryTree has a root, left and right values and a greater or equal value than root value but lower than right-root child value is inserted, then it is inserted as the left child of the right-root child', () => {
         const binaryTreeTest = new BinaryTree();
         binaryTreeTest.insertValue(3);
         binaryTreeTest.insertValue(2);
@@ -70,7 +69,7 @@ describe("Test binary search",() => {
         expect(binaryTreeTest.root.right.left.value).toBe(5);
     });
 
-    test('When a binaryTree has a root, left and right values and a new lower value is inserted, then it creates a second level and add to the left-left tree part the new value', () => {
+    test('When a binaryTree has a root, left and right values and a new lower value than root and left-root child value is inserted, then it is inserted as the left child of the left-root child', () => {
         const binaryTreeTest = new BinaryTree();
         binaryTreeTest.insertValue(5);
         binaryTreeTest.insertValue(2);
@@ -83,8 +82,7 @@ describe("Test binary search",() => {
         expect(binaryTreeTest.root.left.right).toBeNull();
     });
 
-    //Matizar lower or equal
-    test('When a binaryTree has a root, left and right values and a new lower value is inserted, then it creates a second level and add to the left-right tree part the new value', () => {
+    test('When a binaryTree has a root, left and right values and a new lower than root value but greater or equal than left-root child value is inserted, then it is inserted as the right child of the left-root child', () => {
         const binaryTreeTest = new BinaryTree();
         binaryTreeTest.insertValue(5);
         binaryTreeTest.insertValue(3);

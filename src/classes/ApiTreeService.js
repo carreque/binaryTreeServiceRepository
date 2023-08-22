@@ -5,7 +5,7 @@ class ApiTreeService {
     constructor(){
 
         /*
-            When an ApiTreeService instance is created, It creates a server that listen on the port 8080 and defines the path of the operations route module. 
+            When an ApiTreeService instance is created, It creates a server that listen on the port 8080 and defines the path of the treeOperations route module. 
             It also going to execute the functions to use the middlewares and routes defined for the application.
         */
         this.app = express();
@@ -27,11 +27,13 @@ class ApiTreeService {
     }
 
     routes(){
+
         //Use the paths defined in the treeOperations module
         this.app.use(this.paths.operations, require('../routers/treeOperations'));
     }
 
     listen(){
+        
         //Configure the application to listen in the port defined in the constructor
         this.server.listen(this.port, () => {
             console.log(`Running on port: ${this.port}`)

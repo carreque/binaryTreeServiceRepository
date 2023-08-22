@@ -11,6 +11,7 @@ const insertNewValue = async(req = request, res = response) => {
      */
     const {value, tree} = req.body;
     const binaryTree = new BinaryTree();
+    
     if(tree === null){
         binaryTree.insertValue(value);
         return res.status(200).json(binaryTree.toString());
