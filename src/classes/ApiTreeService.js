@@ -1,13 +1,16 @@
 const express = require('express');
 const http = require('http');
-const {Server} = require('socket.io');
 class ApiTreeService {
 
     constructor(){
+
+        /*
+            When an ApiTreeService instance is created, It creates a server that listen on the port 8080 and defines the path of the operations route module. 
+            It also going to execute the functions to use the middlewares and routes defined for the application.
+        */
         this.app = express();
         this.server = http.createServer(this.app);
         this.port = '8080';
-        this.io = new Server(this.server, {});
         this.paths = {
             operations: '/api/operations'
         };
@@ -21,15 +24,15 @@ class ApiTreeService {
 
         //Parsing body as json
         this.app.use(express.json());
-        this.app.use(express.static('public'));
-
     }
 
     routes(){
+        //Use the paths defined in the treeOperations module
         this.app.use(this.paths.operations, require('../routers/treeOperations'));
     }
 
     listen(){
+        //Configure the application to listen in the port defined in the constructor
         this.server.listen(this.port, () => {
             console.log(`Running on port: ${this.port}`)
         });

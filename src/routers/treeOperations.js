@@ -8,10 +8,11 @@ const router = Router();
 
 router.post('/insertValue', [
     check('value', 'Value field could not be empty').notEmpty(),
+    check('value', 'Value field should be numeric').isInt(),
     check('tree').custom(checkTreeValue).withMessage('Tree field could not be empty'),
     validateFields
 ], insertNewValue);
 
-router.get('/helloWord', testConnection);
+router.get('/helloWorld', testConnection);
 
 module.exports = router;
