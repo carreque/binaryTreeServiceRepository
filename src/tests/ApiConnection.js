@@ -1,5 +1,5 @@
-/*
-const ApiTreeService = require('../classes/ApiTreeService');
+
+const fs = require('fs');
 
 describe("Api connection test",() =>{
 
@@ -36,6 +36,10 @@ describe("Api connection test",() =>{
     }
     const baseUrl = "http://localhost:8080/api/operations/";
 
+    afterEach(async () => {
+        await new Promise(resolve => setTimeout(resolve, 400));
+    });
+    
     test('Api connection is stablish', async () => {
         const response = await fetch(baseUrl+"/helloWorld", {
             method: "GET"
@@ -130,7 +134,25 @@ describe("Api connection test",() =>{
         expect(response.status).toBe(200);
         expect(message).toEqual(treeInstanceWhenTreeIsNotNullLeft);
     });
+
+    test('It should return a 200 status code and the tree should be stored in the json file', async() => {
+        const response = await fetch(baseUrl+"/insertValue", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "value": 1,
+                "tree": initialTree
+            })
+        });
+
+        const message = await response.json();
+        expect(response.status).toBe(200);
+        expect(message).toEqual(treeInstanceWhenTreeIsNotNullLeft);
+        const informationInJsonFile = fs.readFileSync('tree.json');
+        expect(JSON.parse(informationInJsonFile)).toEqual(treeInstanceWhenTreeIsNotNullLeft);
+    });
     
 });
 
-*/

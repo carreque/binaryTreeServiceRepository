@@ -1,4 +1,5 @@
 const {request, response} = require('express');
+const fs = require('fs');
 const BinaryTree = require('../classes/BinaryTree');
 const Node = require('../classes/Node');
 const insertNewValue = async(req = request, res = response) => {
@@ -14,6 +15,8 @@ const insertNewValue = async(req = request, res = response) => {
     
     if(tree === null){
         binaryTree.insertValue(value);
+        const serializedTree = serializeBinaryTree(binaryTree.root);
+        insertBinaryTreeInJsonFile(serializedTree);
         return res.status(200).json(binaryTree.toString());
     }
     
@@ -22,6 +25,8 @@ const insertNewValue = async(req = request, res = response) => {
     newRoot.right = tree.right;
     binaryTree.root = newRoot;
     binaryTree.insertValue(value);
+    const serializedTree = serializeBinaryTree(binaryTree.root);
+    insertBinaryTreeInJsonFile(serializedTree);
     return res.status(200).json(binaryTree.toString());
 }
 
@@ -29,6 +34,26 @@ const testConnection = async(req = request, res = response) => {
 
     //Function to test the connection with the operation module.
     return res.status(200).json("Hello world");
+}
+
+const serializeBinaryTree = (node) => {
+
+    /**
+     * 1 - Check if the recieved node is valid
+     * 2 - return an object with the actual node value and serialize its children if exist, otherwise its value will be null
+     */
+    if(node === undefined || node === null)
+        return null;
+
+    return {
+        value: node.value,
+        left: node.left !== undefined ? serializeBinaryTree(node.left) : null,
+        right: node.right !== undefined ? serializeBinaryTree(node.right): null
+    }
+}
+const insertBinaryTreeInJsonFile = (treeSerialized) => {
+    //Create if doesn't exist or overwrite a json file called tree and fill it with the serialized tree received in the endpoint updated with the new value to insert.
+    fs.writeFileSync("tree.json", JSON.stringify(treeSerialized, null,2));
 }
 module.exports = {
     insertNewValue,
