@@ -32,3 +32,30 @@ Because of what I have mentioned before about the number of requests done to the
 - The way to store data is should be considered carefully in order to let the API REST scales when the number of users or requests increases.
 - In order to reduce the requests done to the API, sometimes is possible to do a perfomance technique called caching. This way the data will be stored in memory. 
 - There are going to be information that need to be securily stored, like passwords or card numbers.
+
+# Deployment in kubernetes
+
+## Kind installation
+
+In this case the application was deployed using the local kind cluster https://github.com/kubernetes-sigs/kind. Prior to install kind, It is necessary to install go. Once go is installed and configured the following command should be executed to install kind: go install sigs.k8s.io/kind@v0.20.0 . In my case, after the installation, the following error appeared: "kind: command not found". As the repository shows, to solve this problem it is necessary to put kind in the go environment by executing in my case the command: go env -w GOBIN=/usr/local/go/bin. After solve this problem, the kind version could be checked applying the following command: kind --version.
+
+## Create a cluster
+In this section I am going to talk about how I create a cluster, all the information can be seen here: https://kind.sigs.k8s.io/docs/user/ingress/#using-ingress.
+
+To create a cluster and use a popular ingress option like countour, nginx or kong, it is necessary to configure the cluster so it knows that an ingress is going to be used and configure the ports. To achieve this step is going to be executed the box-content which appears at the beginning of the using-ingress documentation, mentionated at the beginning of this subsection. 
+
+
+Once the cluster was created with the mentioned configuration, the docker image with the microservice needs to be loaded in the cluster through the command: kind load docker-image treeservice. 
+
+## Ingress
+After loading the image, I installed the ingress-nginx option, so I followed the steps mentioned on that section executing the following commands:
+
+- kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+- kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=90s
+
+When the last command gives the output  "pod/ingress-nginx-controller-6b7f45576b-nshqm condition met", then the pod is ready to process requests. Now the last step is to configure our service in a yaml file, in this case in the treeService.yaml. Once it is defined all the content of the service (the ingress object, deployment and service for this situation), the following command needs to be executed to apply the changes: kubectl apply -f treeService.yaml.
+
+Finally in the url https://localhost/treeservice/api/operations/helloWorld, It will appear the message "Hello world".
