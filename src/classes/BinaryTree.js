@@ -31,7 +31,7 @@ class BinaryTree{
     insertNode(nodeToStartSearching, newNodeToInsert){
 
         /**
-         * 1 - First check if the received variables has a correct value
+         * 1 - First check if the received variables have a correct value
          * 2 - Check if the value has to be added to the right or left in the tree, depending on the new node's value
          * 3 - If when the second step is applied it reachs out a null value, then the new node is inserted there
          *     On the other hand, the second step still happening until the first condition of this step is achieved
@@ -66,7 +66,7 @@ class BinaryTree{
          * 1 - Check if is the received node is a valid node
          * 2 - If the left children exists and it differents from null, then it calls to the same function to print and check the left children
          * 3 - If the right children exists and it differents from null, then it calls to the same function to print and check the right children
-         * 4 - return the actual node
+         * 4 - Return the actual node
          */
         if (nodeToBeginPrint === undefined || nodeToBeginPrint === null){
             return "";

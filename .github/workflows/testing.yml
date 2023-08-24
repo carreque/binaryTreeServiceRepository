@@ -5,7 +5,7 @@ on: [push] #Event which is going to trigger the workflow. It could be pull reque
 jobs: #set of steps that execute on the same runner. In this case there is only one job named tests.
   tests:
     runs-on: ubuntu-latest #The job is going to be runned on the latest image of ubuntu available in the system of the machine that will run this action
-    strategy: #In this case I define a matrix strategy to let me use variable in this file. In this case, because is just one job, it is not necessary whereas in a situation with multiple jobs, would be more useful. For example if different jobs uses different versions.
+    strategy: #In this case I define a matrix strategy to let me use variable in this file. In this case, because is just one job, it is not necessary whereas in a situation with multiple jobs, would be more useful. For example if different jobs use different versions.
       matrix:
         node-version: [18.x] #Define variable node-version with the value 18.x
     steps: #Steps that this job is going to follow. For each step, could be configured a name.

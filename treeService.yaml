@@ -4,7 +4,7 @@ kind: Ingress #it defines an ingress object
 metadata: #Data that helps uniquely identify the object, including a name string, UID, and optional namespace
   name: tree-service-ingress
   annotations: #attach arbitrary non-identifying metadata to objects
-    #Configure the NGINX ingress controller behaviour by modifying the path of incoming requests before they are forwarded to the backend service.
+    #Configure the NGINX ingress controller behaviour allowing to modify the path of incoming requests before they are forwarded to the backend service.
     #/$2 value represents a regular expression capture group. It means that the part of the original path matched by the second set of parentheses (/|$)(.*) will replace the original path in the rewritten URL.
     nginx.ingress.kubernetes.io/rewrite-target: /$2 
 spec:         

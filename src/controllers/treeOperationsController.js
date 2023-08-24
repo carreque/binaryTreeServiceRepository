@@ -40,7 +40,7 @@ const serializeBinaryTree = (node) => {
 
     /**
      * 1 - Check if the recieved node is valid
-     * 2 - return an object with the actual node value and serialize its children if exist, otherwise its value will be null
+     * 2 - Return an object with the actual node value and serialize its children if exist, otherwise its value will be null
      */
     if(node === undefined || node === null)
         return null;
