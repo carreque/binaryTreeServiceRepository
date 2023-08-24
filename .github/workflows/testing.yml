@@ -1,20 +1,20 @@
-name: Unit Tests
+name: Unit Tests #Workflow name
 
-on: [push]
+on: [push] #Event which is going to trigger the workflow. It could be pull request and even is possible to configure for specific branches
 
-jobs:
+jobs: #set of steps that execute on the same runner. In this case there is only one job named tests.
   tests:
-    runs-on: ubuntu-latest
-    strategy: 
+    runs-on: ubuntu-latest #The job is going to be runned on the latest image of ubuntu available in the system of the machine that will run this action
+    strategy: #In this case I define a matrix strategy to let me use variable in this file. In this case, because is just one job, it is not necessary whereas in a situation with multiple jobs, would be more useful. For example if different jobs uses different versions.
       matrix:
-        node-version: [18.x]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        node-version: [18.x] #Define variable node-version with the value 18.x
+    steps: #Steps that this job is going to follow. For each step, could be configured a name.
+      - uses: actions/checkout@v2 #It is going to use the action checkout in version 2
+      - name: Use Node.js ${{ matrix.node-version }} #Name this step Use Node.js 18.x (It uses the variable defined previously)
+        uses: actions/setup-node@v1 #For this step it is going to use the action setup node in version 1, using the version node defined in the variable node-version.
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install
-        run: npm ci
-      - name: tests
-        run: npm test
+      - name: npm install 
+        run: npm ci #Install dependencies. It uses npm ci because is more suitable for pipelines.
+      - name: tests 
+        run: npm test #Finally, It runs the tests

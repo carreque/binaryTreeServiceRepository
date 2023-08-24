@@ -1,30 +1,33 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
+#Here there are three objects defined for the service: an ingress object, a service object and a deployment object.
+apiVersion: networking.k8s.io/v1 #It specifies the version of the Kubernetes API that the object uses
+kind: Ingress #it defines an ingress object
+metadata: #Data that helps uniquely identify the object, including a name string, UID, and optional namespace
   name: tree-service-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  rules:
-  - http:
+  annotations: #attach arbitrary non-identifying metadata to objects
+    #Configure the NGINX ingress controller behaviour by modifying the path of incoming requests before they are forwarded to the backend service.
+    #/$2 value represents a regular expression capture group. It means that the part of the original path matched by the second set of parentheses (/|$)(.*) will replace the original path in the rewritten URL.
+    nginx.ingress.kubernetes.io/rewrite-target: /$2 
+spec:         
+  rules: #An array of one routing roule 
+  - http: #HTTP routing configuration for the rule.
       paths:
-      - pathType: Prefix
-        path: "/treeservice(/|$)(.*)"
-        backend:
+      - pathType: Prefix # the path will be matched based on the prefix
+        path: "/treeservice(/|$)(.*)" #the path pattern which should match for incoming request. It will match any path which starts with /treeservice
+        backend: #It defines the backend service which is going to be forwarded the request
           service:
             name: treeservice
             port:
               number: 8080
 ---
-kind: Service
+kind: Service #It defines a service object
 apiVersion: v1
 metadata:
   name: treeservice
-  labels:
-    app: treeservice
+  labels: #attach key-value pairs as labels to that object.
+    app: treeservice #the key app will have the value treeservice
 spec:
-  type: ClusterIP
-  selector:
+  type: ClusterIP #It specifies to create an internal IP address which is only accessible only within the cluster. It also allows to other services of the cluster to access this service.
+  selector: #It defines labels that identify the pods to which the Service route the traffic. In this case is the same pair key-value as the previous labels defined in metadata.
     app: treeservice
   ports:
     - name: http
@@ -39,12 +42,12 @@ metadata:
     app: treeservice
 spec:
   selector:
-    matchLabels:
+    matchLabels: #It is used to define the criteria for selecting pods that belong to the desired set of replicas managed by the deployment
       app: treeservice
   replicas: 1
-  strategy:
-    type: RollingUpdate
-  template:
+  strategy: #It defines the deployment strategy. 
+    type: RollingUpdate  #In this case, with this strategy, replaces pods running the old version of the application with the new version, one by one, without downtime to the cluster. There are also possible to configure parameters for this option like maxSurge and maxUnavailable. 
+  template: #Start of the template specification for the pods managed by the Deployment 
     metadata:
       labels:
         app: treeservice
@@ -53,9 +56,9 @@ spec:
       containers:
       - name: treeservice
         image: treeservice
-        imagePullPolicy: Never
+        imagePullPolicy: Never #Other possible option to this situation would be IfNotPresent which is the defaultOption
         ports:
-          - name: http
-            containerPort: 8080
-            protocol: TCP
+          - name: http #Name for the port that can be referred to by services.
+            containerPort: 8080 #Number of port to expose on the pod's IP address
+            protocol: TCP #Options are UDP, TCP, or SCTP
 ---
